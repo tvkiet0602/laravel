@@ -17,4 +17,9 @@ use App\Http\Controllers\CustomersController;
 
 Route::prefix('customers')->group(function (){
     Route::get('/', [CustomersController::class, 'index'])->name('customers');
+
+    Route::get('/edit/{id}', [CustomersController::class, 'editCustomers'])->name('edit');
+
+    Route::post('/edit/{id}', [CustomersController::class, 'postEditCustomers'])->name('post-edit');
+
 });
