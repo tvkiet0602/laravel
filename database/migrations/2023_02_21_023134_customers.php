@@ -17,12 +17,15 @@ return new class extends Migration
             $table->tinyInteger('gender')->default(1);
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('address')->nullable();
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
+//        schema::table('customers', function ($table)
+//        {
+//            $table->dropColumn(['address']);
+//        });
     }
 
 

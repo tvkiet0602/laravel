@@ -21,9 +21,8 @@ Route::prefix('customers')->group(function (){
     Route::get('/edit/{id}', [CustomersController::class, 'editCustomers'])->name('edit');
     Route::post('/edit/{id}', [CustomersController::class, 'postEditCustomers']);
 
-    Route::get('/add', [CustomersController::class, 'addCustomers'])->name('add');
-    Route::post('/add', [CustomersController::class, 'postAddCustomers']);
-
     Route::get('/delete/{id}', [CustomersController::class, 'deleteCustomers'])->name('delete');
+
+    Route::match(['get', 'post'], '/add',  [CustomersController::class, 'postAddCustomers'])->name('add');
 
 });
