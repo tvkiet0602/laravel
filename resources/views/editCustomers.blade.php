@@ -36,7 +36,7 @@
                 <tr>
                     <td>
                         <label>Gender</label>
-                        <select class="form-control" value="{{$item->gender}}">
+                        <select class="form-control" name="gender" value="{{$item->gender}}">
                             <option value="1">Male</option>
                             <option value="0">Female</option>
                         </select>
@@ -45,31 +45,31 @@
                 <tr>
                     <td>
                         <label>Email</label>
-                        <input type="email" class="form-control" value="{{$item->email}}">
+                        <input type="email" class="form-control" name="email" value="{{$item->email}}">
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label>Username</label>
-                        <input type="text" class="form-control" value="{{$item->username}}">
+                        <input type="text" class="form-control" name="username" value="{{$item->username}}">
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label>Address</label>
-                        <input type="text" class="form-control" value="{{$item->address}}">
+                        <input type="text" class="form-control" name="address" value="{{$item->address}}">
                     </td>
                 </tr>
                 <tr>
+                    <?php echo csrf_field();?>
                     <td>
                         <br><input type="submit" class="form-control" id="submit" value="Update">
                         <br><a href="{{route('customers')}}" class="form-control" id="cancel">Cancel</a>
-
                     </td>
                 </tr>
                 @endforeach
             </table>
-        @csrf
+
         </form>
     </div>
 

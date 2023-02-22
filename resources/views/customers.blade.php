@@ -18,7 +18,7 @@
 </head>
 <body>
     <h2>Customers</h2>
-    <a type="button" class="btn btn-primary">Add Customer</a>
+    <a href="{{route('add')}}" type="button" class="btn btn-primary">Add Customer</a>
         <table class="table table-bordered" >
             <tr style="text-align: left">
                 <th style="width: 5%">STT</th>
@@ -46,7 +46,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{{route('edit', ['id'=>$item->id])}}">Edit</a>
-                            <a class="dropdown-item" href="#">Delete</a>
+                            <a onclick="return confirm('Are you want to delete this user?')" class="dropdown-item" href="{{route('delete', ['id'=>$item->id])}}">Delete</a>
                         </div>
                     </div>
                 </td>
