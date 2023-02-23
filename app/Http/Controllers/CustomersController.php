@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use mysql_xdevapi\Table;
+use App\Models\Customers;
 
 class CustomersController extends Controller
 {
     public function index(){
+
         return view('customers', [
             'customers' => DB::table('customers')->paginate(5)
         ]);
@@ -50,5 +52,6 @@ class CustomersController extends Controller
         $delete = DB::delete('DELETE FROM customers WHERE id = ?', [$id]);
         return redirect()->route('customers');
     }
+
 
 }

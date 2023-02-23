@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomersController;
+use App\Http\Controllers\OrmCustomersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,12 @@ Route::prefix('customers')->group(function (){
     Route::get('/delete/{id}', [CustomersController::class, 'deleteCustomers'])->name('delete');
 
     Route::match(['get', 'post'], '/add',  [CustomersController::class, 'postAddCustomers'])->name('add');
+});
 
+Route::prefix('customersORM')->name('customers.')->group(function (){
+    Route::get('/', [OrmCustomersController::class, 'index'])->name('index');
+
+    Route::get('/add', [OrmCustomersController::class, 'addCustomers'])->name('add');
+
+    Route::get('/edit/{id}', [OrmCustomersController::class, 'editCustomers'])->name('edit');
 });

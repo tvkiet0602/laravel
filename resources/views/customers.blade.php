@@ -25,7 +25,7 @@
                 <th style="width: 15%">Full_Name</th>
                 <th style="width: 5%">Gender</th>
                 <th style="width: 15%">Username</th>
-                <th style="width: 20%">Address</th>
+{{--                <th style="width: 20%">Address</th>--}}
                 <th style="width: 20%">Email</th>
                 <th style="width: 10%">Creat_at</th>
                 <th></th>
@@ -36,7 +36,7 @@
                 <td>{{$item->name}}</td>
                 <td>{{$item->gender}}</td>
                 <td>{{$item->username}}</td>
-                <td>{{$item->address}}</td>
+{{--                <td>{{$item->address}}</td>--}}
                 <td>{{$item->email}}</td>
                 <td></td>
                 <td>
