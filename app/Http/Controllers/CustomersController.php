@@ -10,18 +10,22 @@ use App\Models\Customers;
 
 class CustomersController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         return view('customers', [
             'customers' => DB::table('customers')->paginate(5)
         ]);
     }
 
-    public function editCustomers($id){
+    public function editCustomers($id)
+    {
         $detail = DB::select('SELECT * FROM customers WHERE id = ?', [$id]);
         return view('editCustomers', compact('detail'));
     }
-    public function postEditCustomers(Request $request, $id){
+
+    public function postEditCustomers(Request $request, $id)
+    {
         DB::table('customers')->where('id', $id)->update([
             'name' => $request->name,
             'gender' => $request->gender,
@@ -32,8 +36,9 @@ class CustomersController extends Controller
         return redirect()->route('customers');
     }
 
-    public function postAddCustomers(Request $request){
-        if($request->method() == 'POST'){
+    public function postAddCustomers(Request $request)
+    {
+        if ($request->method() == 'POST') {
             DB::table('customers')->insert([
                 'name' => $request->name,
                 'gender' => $request->gender,
@@ -43,12 +48,13 @@ class CustomersController extends Controller
                 'address' => $request->address
             ]);
             return redirect()->route('customers');
-        }else{
+        } else {
             return view('addCustomers');
         }
     }
 
-    public function deleteCustomers($id){
+    public function deleteCustomers($id)
+    {
         $delete = DB::delete('DELETE FROM customers WHERE id = ?', [$id]);
         return redirect()->route('customers');
     }

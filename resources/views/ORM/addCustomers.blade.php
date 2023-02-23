@@ -15,41 +15,49 @@
             background-color: #718096;
             color: #ffffff;
         }
+        label{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 <h1>Add Customer</h1>
-<form method="POST">
+<form method="POST" action="{{route('customers.post-add')}}">
     <div>
-        <label>Full Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Input fullname">
+        <label>Full Name (*)</label>
+        <input type="text" class="form-control" name="name" placeholder="Input fullname" required>
     </div><br>
     <div>
-        <label>Gender</label>
-        <select class="form-control" name="gender">
+        <label>Gender (*)</label>
+        <select class="form-control" name="gender" required>
             <option value="1">Male</option>
             <option value="0">Female</option>
         </select>
     </div><br>
     <div>
-        <label>Username</label>
-        <input type="text" class="form-control" name="username" placeholder="Input username">
+        <label>Username (*)</label>
+        <input type="text" class="form-control" name="username" placeholder="Input username" required>
     </div><br>
     <div>
-        <label>Password</label>
-        <input type="password" class="form-control" name="password" placeholder="Input password">
+        <label>Password (*)</label>
+        <input type="password" class="form-control" name="password" placeholder="Input password" required>
     </div><br>
     <div>
-        <label>Email</label>
-        <input type="email" class="form-control" name="email" placeholder="Input email">
+        <label>Email (*)</label>
+        <input type="email" class="form-control" name="email" placeholder="Input email" required>
     </div><br>
     <div>
-        <label>Address 1</label>
-        <input type="text" class="form-control" name="address" placeholder="Input address">
-    </div><br>
-    <div>
-        <label>Address 2</label>
-        <input type="text" class="form-control" name="address" placeholder="Input address">
+        <label>Address (*)</label><br>
+        @foreach($type as $key)
+            <p><input type="checkbox" name="address[]" value="{{$key->id}}">{{$key->type}}</p>
+        @endforeach
+{{--        <p><input type="checkbox" name="permanent" > Permanent address</p>--}}
+{{--        <p><input type="checkbox" name="company" > Company address</p>--}}
+{{--        <p><input type="checkbox" name="business" > Business address</p>--}}
+        <input type="text" class="form-control" name="number" placeholder="Input number address" ><br>
+        <input type="text" class="form-control" name="street" placeholder="Input street address" ><br>
+        <input type="text" class="form-control" name="district" placeholder="Input district address" ><br>
+        <input type="text" class="form-control" name="city" placeholder="Input city address" >
     </div><br><br>
     <div>
         <input type="submit" class="form-control" value="Add" id="add">

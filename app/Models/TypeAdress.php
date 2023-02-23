@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TypeAdress extends Model
 {
     use HasFactory;
-    protected $table = 'typeAdrress';
+    protected $table = 'typeAddress';
+
 }

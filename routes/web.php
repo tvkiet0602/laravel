@@ -31,6 +31,34 @@ Route::prefix('customersORM')->name('customers.')->group(function (){
     Route::get('/', [OrmCustomersController::class, 'index'])->name('index');
 
     Route::get('/add', [OrmCustomersController::class, 'addCustomers'])->name('add');
+    Route::post('/add', [OrmCustomersController::class, 'postAddCustomers'])->name('post-add');
 
     Route::get('/edit/{id}', [OrmCustomersController::class, 'editCustomers'])->name('edit');
+/* 1-1
+    Route::get('/ad', function (){
+       $customers = App\Models\Customers::all();
+       foreach ($customers as $customer){
+           echo "<br>";echo "<br>";
+           echo $customer->name;
+           echo "<br>";
+           if($customer->Address !== null){
+               echo $customer->Address->city;
+
+           }
+       }
+    });
+*/
+    /* 1-N
+    Route::get('/ad', function (){
+        $customers = App\Models\Customers::all();
+        foreach ($customers as $customer){
+            echo $customer->name;
+            echo "<br>";
+            foreach ($customer->address as $address) {
+                echo $address->number.', '.$address->street.', '.$address->district.', '.$address->city;
+                echo '<br>';
+            }
+        }
+    });
+    */
 });
