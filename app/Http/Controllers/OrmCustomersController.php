@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Cassandra\Custom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\View\View;
 use mysql_xdevapi\Table;
 use App\Models\Customers;
@@ -16,15 +18,15 @@ class OrmCustomersController extends Controller
 {
     public function index()
     {
-        $types = Address::all();
-        $customers = Customers::paginate(5);
-        return view('ORM.customers', compact('customers', 'types'));
+        $cus = Customers::with(['address' => function($query){
+            $query->where('typeAddress_id', 1);
+        }])->paginate(5);
+        return view('ORM.customers', compact('cus'));
     }
 
     public function addCustomers()
     {
         $type = TypeAdress::all();
-
         return view('ORM.addCustomers', compact('type'));
     }
 
@@ -55,7 +57,31 @@ class OrmCustomersController extends Controller
 
     public function editCustomers($id)
     {
-        $detail = Customers::where('id', $id)->get();
-        return view('ORM.editCustomers ', ['editCustomers' => $detail]);
+        $detail = Customers::find($id);
+        $address = $detail->address;
+        $type = Address::all();
+
+        return view('ORM.editCustomers ', ['editCustomers' => $detail, 'editAddress' => $address, 'editType'=>$type]);
+    }
+    public function postEditCustomers(Request $request, $id){
+        $updateCustomer = Customers::where('id', $id)->update([
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'username' => $request->username,
+            'email' => $request->email
+        ]);
+        if($updateCustomer){
+            foreach ($request->address as $address) {
+                Address::update([
+                    'number' => $request->number,
+                    'street' => $request->street,
+                    'district' => $request->district,
+                    'city' => $request->city,
+                    'typeAddress_id' => $address,
+                    'customer_id' => $updateCustomer->id
+                ]);
+            }
+        }
+        return redirect()->route('customers.index');
     }
 }

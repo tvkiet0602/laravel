@@ -21,6 +21,7 @@
 <h2>Customers</h2>
 <a href="{{route('customers.add')}}" type="button" class="btn btn-primary">Add Customer</a>
 <table class="table table-bordered">
+
     <tr style="text-align: left">
         <th style="width: 5%">STT</th>
         <th style="width: 15%">Full_Name</th>
@@ -31,34 +32,40 @@
         <th style="width: 10%">Creat_at</th>
         <th></th>
     </tr>
-    @foreach($customers as $key => $item)
-{{--        @foreach($types as $default)--}}
-            <tr>
-                <td>{{$key + 1}}</td>
-                <td>{{$item->name}}</td>
-                <td>{{$item->gender}}</td>
-                <td>{{$item->username}}</td>
-{{--                <td>{{$default->number.', '.$default->street.', '.$default->district.', '.$default->city}}</td>--}}
-                <td>{{$item->email}}</td>
-                <td></td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Action
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{route('customers.edit', ['id'=>$item->id])}}">Edit</a>
-                            <a onclick="return confirm('Are you want to delete this user?')" class="dropdown-item"
-                               href="{{route('delete', ['id'=>$item->id])}}">Delete</a>
-                        </div>
+    @foreach($cus as $key => $item)
+        {{--        @foreach($types as $default)--}}
+        <tr>
+            <td>{{$key + 1}}</td>
+            <td>{{$item->name}}</td>
+            <td>{{$item->gender}}</td>
+            <td>{{$item->username}}</td>
+
+            <td>
+                @foreach ($item->address as $address)
+                    {{$address->number . ', ' . $address->street . ', ' . $address->district . ', ' . $address->city}}
+                @endforeach
+            </td>
+
+            <td>{{$item->email}}</td>
+            <td></td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Action
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{route('customers.edit', ['id'=>$item->id])}}">Edit</a>
+                        <a onclick="return confirm('Are you want to delete this user?')" class="dropdown-item"
+                           href="{{route('delete', ['id'=>$item->id])}}">Delete</a>
                     </div>
-                </td>
-            </tr>
-{{--        @endforeach--}}
+                </div>
+            </td>
+        </tr>
+        {{--        @endforeach--}}
     @endforeach
 </table>
-{!! $customers->links() !!}
+{!! $cus->links() !!}
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

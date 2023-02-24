@@ -18,4 +18,5 @@ class Customers extends Model
     {
         return $this->hasMany('App\Models\Address', 'customer_id', 'id');
     }
+
 }
