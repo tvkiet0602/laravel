@@ -21,6 +21,9 @@
             text-decoration: none;
             background-color: beige;
         }
+        label{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -34,8 +37,7 @@
                     <label>Full Name</label>
                     <input type="text" class="form-control" name="name" value="{{$editCustomers['name']}}">
                 </td>
-            </tr>
-            <tr>
+
                 <td>
                     <label>Gender</label>
                     <select class="form-control" name="gender" value="{{$editCustomers['gender']}}">
@@ -49,54 +51,61 @@
                     <label>Email</label>
                     <input type="email" class="form-control" name="email" value="{{$editCustomers['email']}}">
                 </td>
-            </tr>
-            <tr>
+
                 <td>
                     <label>Username</label>
                     <input type="text" class="form-control" name="username" value="{{$editCustomers['username']}}">
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <a href="" type="button" class="btn-link btn-lg">+</a>
-                    @foreach ($editAddress as $key => $address)
+            @foreach ($editAddress as $key => $address)
+                <tr>
+                    <td>
+                        @if($address->typeAddress_id == 1)
+                            <label>Default Address</label>
+                            <a href="{{route('customers.address', ['id'=>$id])}}" type="button" class="btn-link btn-lg">+</a>
+{{--                        @elseif($address->typeAddress_id == 2)--}}
+{{--                            <label>Permanent Address</label>--}}
+{{--                        @elseif($address->typeAddress_id == 3)--}}
+{{--                            <label>Company Address</label>--}}
+{{--                        @elseif($address->typeAddress_id == 4)--}}
+{{--                            <label>Business Address</label>--}}
 
-                        @foreach ($editType as $key => $types)
-                            @if($types->typeAddress->id == 1)
-                                {
-                                <label>Default Adress</label>
-                                }
-                            @elseif($types->typeAddress->id == 2)
-                                {
-                                <label>Permanent address</label>
-                                }
-                            @elseif($types->typeAddress->id == 3)
-                                {
-                                <label>Company address</label>
-                                }
-                            @else
-                                {
-                                <label>Business address</label>
-                                }
-                            @endif
-                        @endforeach
+                    </td>
+                    <td></td>
+                </tr>
 
+                <tr>
+                    <td>
                         <input type="text" class="form-control" name="number" placeholder="Input number address"
-                               value="{{$address->number}}"><br>
+                               value="{{$address->number}}">
+                    </td>
+                    <td>
                         <input type="text" class="form-control" name="street" placeholder="Input street address"
-                               value="{{$address->street}}"><br>
+                               value="{{$address->street}}">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
                         <input type="text" class="form-control" name="district" placeholder="Input district address"
-                               value="{{$address->district}}"><br>
+                               value="{{$address->district}}">
+                    </td>
+                    <td>
                         <input type="text" class="form-control" name="city" placeholder="Input city address"
                                value="{{$address->city}}">
-                    @endforeach
-                </td>
-            </tr>
+
+                    </td>
+                </tr>
+                @else
+                @endif
+            @endforeach
             <tr>
                 <?php echo csrf_field(); ?>
                 <td>
-                    <br><input type="submit" class="form-control" id="submit" value="Update">
                     <br><a href="{{route('customers.index')}}" class="form-control" id="cancel">Cancel</a>
+                </td>
+                <td>
+                    <br><input type="submit" class="form-control" id="submit" value="Update">
                 </td>
             </tr>
             {{--            @endforeach--}}

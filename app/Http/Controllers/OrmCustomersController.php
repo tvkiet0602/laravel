@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Cassandra\Custom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\View\View;
 use mysql_xdevapi\Table;
@@ -18,7 +19,7 @@ class OrmCustomersController extends Controller
 {
     public function index()
     {
-        $cus = Customers::with(['address' => function($query){
+        $cus = Customers::with(['address' => function ($query) {
             $query->where('typeAddress_id', 1);
         }])->paginate(5);
         return view('ORM.customers', compact('cus'));
@@ -41,7 +42,7 @@ class OrmCustomersController extends Controller
         ]);
 
         if ($customers) {
-            foreach ($request->address as $address){
+            foreach ($request->address as $address) {
                 Address::create([
                     'number' => $request->number,
                     'street' => $request->street,
@@ -59,18 +60,18 @@ class OrmCustomersController extends Controller
     {
         $detail = Customers::find($id);
         $address = $detail->address;
-        $type = Address::all();
-
-        return view('ORM.editCustomers ', ['editCustomers' => $detail, 'editAddress' => $address, 'editType'=>$type]);
+        return view('ORM.editCustomers ', ['editCustomers' => $detail, 'editAddress' => $address, 'id' => $id]);
     }
-    public function postEditCustomers(Request $request, $id){
+
+    public function postEditCustomers(Request $request, $id)
+    {
         $updateCustomer = Customers::where('id', $id)->update([
             'name' => $request->name,
             'gender' => $request->gender,
             'username' => $request->username,
             'email' => $request->email
         ]);
-        if($updateCustomer){
+        if ($updateCustomer) {
             foreach ($request->address as $address) {
                 Address::update([
                     'number' => $request->number,
@@ -83,5 +84,38 @@ class OrmCustomersController extends Controller
             }
         }
         return redirect()->route('customers.index');
+    }
+
+    public function addAddress($id)
+    {
+        $detail = Customers::find($id);
+        $addresses = TypeAdress::orderBy('id')->get(['id', 'type']);
+
+        $adrs = $detail->address->groupBy(function ($item) {
+            return $item->typeAddress_id;
+        })->toArray();
+
+        $lists = [];
+        foreach ($addresses as $address) {
+            $lists[$address->id] = array_merge([
+                'label' => $address->type
+            ], Arr::get($adrs, "{$address->id}.0", [
+                "number" => "",
+                "street" => "",
+                "district" => "",
+                "city" => "",
+                "typeAddress_id" => $address->id,
+                "customer_id" => $detail->id,
+            ]));
+        }
+
+        return view('ORM.addAddress ', ['editCustomers' => $detail, 'lists' => $lists]);
+    }
+
+    public function postAddress(Request $request)
+    {
+        foreach ($request->input('address') as $key_id => $address) {
+            dd($address['number']);
+        }
     }
 }

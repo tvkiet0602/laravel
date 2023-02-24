@@ -36,8 +36,9 @@ Route::prefix('customersORM')->name('customers.')->group(function (){
     Route::get('/edit/{id}', [OrmCustomersController::class, 'editCustomers'])->name('edit');
     Route::post('/edit/{id}', [OrmCustomersController::class, 'postEditCustomers']);
 
-    Route::get('/edit/{id}/addAddress', [OrmCustomersController::class, 'addAddress'])->name('add-address');
-    Route::post('/edit/{id}/addAddress', [OrmCustomersController::class, 'postAddress'])->name('post-address');
+    Route::get('/addAddress/{id}', [OrmCustomersController::class, 'addAddress'])->name('address');
+    Route::post('/addAddress/{id}', [OrmCustomersController::class, 'postAddress'])->name('post-address');
+
 /* 1-1
     Route::get('/ad', function (){
        $customers = App\Models\Customers::all();
