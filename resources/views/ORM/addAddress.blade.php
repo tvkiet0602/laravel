@@ -46,7 +46,7 @@
         <tr>
             <?php echo csrf_field(); ?>
             <td>
-                <br><a href="{{route('customers.index')}}" class="form-control" id="cancel">Cancel</a>
+                <br><a href="{{route('customers.edit', ['id'=> $editCustomers->id])}}" class="form-control" id="cancel">Cancel</a>
             </td>
             <td>
                 <br><input type="submit" class="form-control" id="submit" value="Update">
